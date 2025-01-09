@@ -5,18 +5,17 @@ import { motion } from 'framer-motion';
 import { IoSearch, IoNotifications, IoPlaySharp } from 'react-icons/io5';
 import { BiCaretDown, BiInfoCircle } from 'react-icons/bi';
 
-
 import useScrollLimit from '../hooks/useScrollLimit';
 import styles from '../styles/Browse.module.scss';
 import nfLogo from '../public/assets/nfLogo.png';
 import Button from '../components/Button';
-
+import Cards from '../components/Cards';
 
 const listLeft = ['Home', 'TV Shows', 'Movies', 'New & Popular', 'My List'];
 
 const SCROLL_LIMIT: number = 80;
-const DUMMY_IMAGE: string =
-  'https://images.unsplash.com/photo-1460881680858-30d872d5b530?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=751&q=80';
+const DUMMY_IMAGE: string = 'https://source.unsplash.com/random';
+
 
 export default function Browse(): React.ReactElement {
   const isScrolled: boolean = useScrollLimit(SCROLL_LIMIT);
@@ -62,36 +61,18 @@ export default function Browse(): React.ReactElement {
         <div className={styles.spotlight__details}>
           <div className={styles.title}>Project Name</div>
           <div className={styles.synopsis}>
-            After a global blackout erases humanity memory of the Beatles, a struggling musician performs the groups
+            After a global blackout erases humanity memory of the Beatles, a struggling musician performs the group
             music and becomes a pop sensation.
           </div>
           <div className={styles.buttonRow}>
-          <Button label='Play' filled Icon={IoPlaySharp} />
-          <Button label='More Info' Icon={BiInfoCircle} />
+            <Button label='Play' filled Icon={IoPlaySharp} />
+            <Button label='More Info' Icon={BiInfoCircle} />
           </div>
-
         </div>
       </div>
 
       <div>
-        scroll <br />
-        scroll <br />
-        scroll <br />
-        scroll <br />
-        scroll <br />
-        scroll <br />
-        scroll <br />
-        scroll <br />
-        scroll <br />
-        scroll <br />
-        scroll <br />
-        scroll <br />
-        scroll <br />
-        scroll <br />
-        scroll <br />
-        scroll <br />
-        scroll <br />
-        scroll <br />
+        <Cards />
         scroll <br />
         scroll <br />
         scroll <br />
