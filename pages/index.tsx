@@ -1,15 +1,16 @@
 import Head from 'next/head';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
+import { NextRouter, useRouter } from 'next/router';
 
 import styles from '../styles/Login.module.scss';
 import LoginBg from '../public/assets/loginBg.jpg';
+import { ROUTES } from '../config/route';
 
-export default function Home() {
-  const router = useRouter();
+export default function Home(): React.ReactElement {
+  const router: NextRouter = useRouter();
 
   const onSignIn = () => {
-    router.push('/Home')
+    router.push(ROUTES.BROWSE)
   }
 
   return (
@@ -24,9 +25,9 @@ export default function Home() {
         <Image src={LoginBg} alt='background image' placeholder='blur' layout='fill' className={styles.main__bgImage} />
         <div className={styles.main__card}>
           <h1>
-            Netflix clone
+            Nextflix
           </h1>
-          <p>A simple netflix clone built using Next.js</p>
+          <p>A simple Netflix clone built using Next.js</p>
           <div className={styles.button} onClick={onSignIn}>Sign in</div>
         </div>
       </main>

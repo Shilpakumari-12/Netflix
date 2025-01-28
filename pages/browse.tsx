@@ -1,63 +1,86 @@
 /* eslint-disable @next/next/no-img-element */
-import Head from 'next/head';
-import { IoPlaySharp } from 'react-icons/io5';
-import { BiInfoCircle } from 'react-icons/bi';
+import dynamic from 'next/dynamic';
+import React, { useContext } from 'react';
 
-import useScrollLimit from '../hooks/useScrollLimit';
+import { ModalContext } from '../context/ModalContext';
 import styles from '../styles/Browse.module.scss';
-import Button from '../components/Button';
-import Cards from '../components/Cards';
-import Navbar from '../components/Navbar';
+import { Section } from '../types';
 
-const SCROLL_LIMIT: number = 80;
-const DUMMY_IMAGE: string = 'https://source.unsplash.com/random';
+const List = dynamic(import('../components/List'));
+const Modal = dynamic(import('../components/Modal'));
+const Layout = dynamic(import('../components/Layout'));
+const Banner = dynamic(import('../components/Banner'));
 
 export default function Browse(): React.ReactElement {
-  const isScrolled: boolean = useScrollLimit(SCROLL_LIMIT);
-  
+  const { isModal } = useContext(ModalContext);
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Nextflix</title>
-        <meta name='description' content='Netflix clone, made using Next.js' />
-        <link rel='icon' href='/favicon.ico' />
-      </Head>
-
-      <Navbar isScrolled={isScrolled} />
-
-      <div className={styles.spotlight}>
-        <img src={DUMMY_IMAGE} alt='spotlight' className={styles.spotlight__image} />
-        <div className={styles.spotlight__details}>
-          <div className={styles.title}>Project Name</div>
-          <div className={styles.synopsis}>
-            After a global blackout erases humanity memory of the Beatles, a struggling musician performs the group
-            music and becomes a pop sensation.
-          </div>
-          <div className={styles.buttonRow}>
-            <Button label='Play' filled Icon={IoPlaySharp} />
-            <Button label='More Info' Icon={BiInfoCircle} />
-          </div>
+    <>
+      {isModal && <Modal />}
+      <Layout>
+        <Banner />
+        <div className={styles.contentContainer}>
+          {sections.map((item, index) => {
+            return (
+              <List
+                key={index}
+                heading={item.heading}
+                endpoint={item.endpoint}
+                defaultCard={item?.defaultCard}
+                topList={item?.topList}
+              />
+            );
+          })}
         </div>
-      </div>
-
-      <div>
-        <Cards />
-        scroll <br />
-        scroll <br />
-        scroll <br />
-        scroll <br />
-        scroll <br />
-        scroll <br />
-        scroll <br />
-        scroll <br />
-        scroll <br />
-        scroll <br />
-        scroll <br />
-        scroll <br />
-        scroll <br />
-        scroll <br />
-        scroll <br />
-      </div>
-    </div>
+      </Layout>
+    </>
   );
 }
+
+const sections: Section[] = [
+  {
+    heading: 'Popular on Nextflix',
+    endpoint: '/api/popular?type=tv'
+  },
+  {
+    heading: 'Horror Movies',
+    endpoint: '/api/discover?type=movie&genre=27'
+  },
+  {
+    heading: 'Only on Nextflix',
+    endpoint: '/api/discover?type=tv',
+    defaultCard: false
+  },
+  {
+    heading: 'Trending Now',
+    endpoint: '/api/trending?type=movie&time=week'
+  },
+  {
+    heading: 'Comedies',
+    endpoint: '/api/discover?type=movie&genre=35'
+  },
+  {
+    heading: 'Top 10 in US Today',
+    endpoint: '/api/trending?type=tv&time=day',
+    topList: true
+  },
+  {
+    heading: 'Action',
+    endpoint: '/api/discover?type=movie&genre=28'
+  },
+  {
+    heading: 'TV Sci-Fi and Horror',
+    endpoint: '/api/discover?type=tv&genre=10765'
+  },
+  {
+    heading: 'Mystery Movies',
+    endpoint: '/api/discover?type=movie&genre=9648'
+  },
+  {
+    heading: 'Animation',
+    endpoint: '/api/discover?type=tv&genre=16'
+  },
+  {
+    heading: 'Drama',
+    endpoint: '/api/discover?type=movie&genre=18'
+  }
+];
